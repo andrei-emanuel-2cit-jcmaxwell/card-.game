@@ -1,24 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+
+    <style>
+        img {
+            width: 145px;
+        }
+
+
+       
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
+
+      
+        .counter {
+            font-size: 50px;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+        }
+        body {
+            background-color: lightblue;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
 </head>
+
+
 <body>
-    <img src="tcg-card-back.jpg" onclick="gira()"/>
+   
+
+    <div id="tavoloDaGioco"></div>
+
+
+   
+    
+    <div class="container">
+        <span class="counter">Punti =</span>&nbsp&nbsp<span id="counter" class="counter">0</span>
+    </div>
+
 
     <script>
-        let carta=document.querySelector("img")
-        function gira() {
-    
- if (carta.src.includes("tcg-card-back.jpg"))
-    carta.src = "SWSH4_IT_43.png" 
-   else 
-   carta.src="tcg-card-back.jpg"
-}
-    
-        </script>
+       
+        carte = ["fronte.png", "fronte.png", "fronte2.png", "fronte2.png"]
+
+     
+        let NcarteGirate = 0;
+        let primaCartaGirata = null
+        tavolo = document.querySelector('#tavoloDaGioco')
+
+
+       
+        var counter = document.getElementById("counter");
+
+
+      
+        var count = 0;
+
+
+       
+        carte.sort(() => Math.random() - 0.5);
+
+
+       
+        carte.forEach(element => {
+            tavolo.innerHTML += '<img id="' + element + '" src="retro.jpg" onclick="gira(this)" />'
+            console.log('<img id="' + element + '" src=retro.jpg" />')
+        });
+
+
+        
+        function gira(carta) {
+            NcarteGirate++
+            console.log(NcarteGirate)
+            carta.src = carta.id
+            if (NcarteGirate == 1)
+                primaCartaGirata = carta
+            else {
+                NcarteGirate = 0
+                if (carta.src == primaCartaGirata.src) {
+                    
+                    count++;
+                
+                    counter.textContent = count;
+                } else {
+                    
+                    setTimeout(function() {
+
+                        carta.src = "back.png";
+                        primaCartaGirata.src = "back.png";
+                    }, 1000);
+                }
+            }
+            counter.textContent = count;
+            if (count == 2) {
+            var h1 = document.createElement("h1");
+            h1.textContent = "Bravo hai vinto!";
+            document.body.appendChild(h1);
+            }
+        }
+    </script>
 </body>
+
+
 </html>
